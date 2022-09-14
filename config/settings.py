@@ -37,8 +37,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    # Third party
+    'webpack_boilerplate',
+
     # Custom App
-    'accounts',
+    'accounts.apps.AccountsConfig',
+    'blog.apps.BlogConfig',
 ]
 
 AUTH_USER_MODEL = "accounts.CustomUser"
@@ -124,9 +128,12 @@ USE_TZ = True
 STATIC_URL = 'static/'
 
 STATICFILES_DIRS = [
-    BASE_DIR / 'static'
+    BASE_DIR / "frontend/build",
 ]
 
+WEBPACK_LOADER = {
+    'MANIFEST_FILE': BASE_DIR / "frontend/build/manifest.json",
+}
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
