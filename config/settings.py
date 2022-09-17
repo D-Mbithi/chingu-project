@@ -129,6 +129,7 @@ STATIC_URL = 'static/'
 
 STATICFILES_DIRS = [
     BASE_DIR / "frontend/build",
+    BASE_DIR / "static",
 ]
 
 WEBPACK_LOADER = {

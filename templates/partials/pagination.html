@@ -1,0 +1,14 @@
+<div class="blog-pagination">
+    {% if page.has_previous %}
+        <a class="btn btn-outline-primary rounded-pill" href="?page={{ page.previous_page_number }}">Previous</a>
+    {% else %}
+        <a class="btn btn-outline-secondary rounded-pill disabled" href="#">Previous</a>
+    {% endif %}
+    
+    {% if page.has_next %}
+        <a class="btn btn-outline-primary rounded-pill" href="?page={{ page.next_page_number }}">Next</a>
+    {% else %}
+        <a class="btn btn-outline-secondary rounded-pill disabled" href="#">Next</a>
+    {% endif %}
+
+</div>

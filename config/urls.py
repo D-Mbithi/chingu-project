@@ -4,8 +4,8 @@ from django.views.generic import TemplateView
 
 
 urlpatterns = [
-    path('', TemplateView.as_view(template_name='index.html'), name='index'),
-    path('blog/', include('blog.urls', namespace='blog')),
+    path('design', TemplateView.as_view(template_name='index.html'), name='index'),
+    path('', include('blog.urls', namespace='blog')),
     path('admin/', admin.site.urls),
     path("accounts/", include("django.contrib.auth.urls")),
 ]
