@@ -11,14 +11,15 @@
         
         {% for post in posts %}            
         <article class="blog-post">
-          <h2 class="blog-post-title mb-1">{{ post.title }}</h2>
+          <a href="{{ post.get_absolute_url }}">
+            <h2 class="blog-post-title mb-1">{{ post.title }}</h2>
+          </a>
           <p class="blog-post-meta">{{ post.publish.date }} by <a href="#" class="text-capitalize">{{post.author}}</a></p>
   
           <p>{{post.body|truncatewords:70}}</p>  
-          <a href="{{ post.get_absolute_url }}" class="stretched-link mt-3">Continue reading</a>
         </article>
         {% endfor %}
-        {% include 'partials/pagination.html' with page=posts %}
+        {% include 'partials/pagination.html' with page=page_obj %}
             
       </div>
   
