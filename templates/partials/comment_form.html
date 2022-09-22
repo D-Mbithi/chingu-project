@@ -1,0 +1,11 @@
+{% load crispy_forms_tags %}
+<div class="form mt-5 bg-light p-5 border">
+    <h2>Add a new comment</h2>
+    <form action="{% url "blog:post_comment" post.id %}" method="post">
+        {% csrf_token %}
+    {{ form|crispy}}
+    <p>
+        <input class="btn btn-outline-primary" type="submit" value="Add comment">
+    </p>
+    </form>
+</div>

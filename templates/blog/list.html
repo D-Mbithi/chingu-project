@@ -10,13 +10,17 @@
       <div class="col-md-8">  
         
         {% for post in posts %}            
-        <article class="blog-post">
-          <a href="{{ post.get_absolute_url }}">
-            <h2 class="blog-post-title mb-1">{{ post.title }}</h2>
-          </a>
-          <p class="blog-post-meta">{{ post.publish.date }} by <a href="#" class="text-capitalize">{{post.author}}</a></p>
-  
-          <p>{{post.body|truncatewords:70}}</p>  
+        <article class="blog-post shadow-sm">
+          <h2 class="blog-post-title mb-1">{{ post.title }}</h2>
+          <p class="blog-post-meta">{{ post.publish.date }} by {{post.author}}</p>
+          <p>{{post.body|truncatewords:70}}</p>
+
+          <small>
+            <a href="{{ post.get_absolute_url }}">
+              Continue Reading
+            </a>
+          </small>
+
         </article>
         {% endfor %}
         {% include 'partials/pagination.html' with page=page_obj %}
