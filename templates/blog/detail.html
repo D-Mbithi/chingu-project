@@ -12,8 +12,10 @@
         </div>
         <section class="col-10 offset-1 blog-body px-5 py-5 mb-5 shadow-sm">
             <header class="mb-5">
-                <h2 class="blog-post-title">{{ post.title }}</h2>
-                <small class="blog-post-meta ">{{ post.publish }} by {{ post.author }}</small>
+                <h2 class="blog-post-title fw-bold">{{ post.title }}</h2>
+                <!-- <small class="blog-post-meta ">{{ post.publish }} by {{ post.author }}</small> -->
+                <p class="text-muted">Published {{ post.publish }} by <span class="text-capitalize">{{ post.author }}</span></p>
+                <p class="tags">Tags: {{ post.tags.all|join:", " }}</p>
             </header>
             <main class="text-opacity-75 lh-2">
                 {{ post.body|linebreaks }}
@@ -30,12 +32,10 @@
             {% endwith %}
             
             {% for comment in comments %}
-                <div class="bg-light rounded-3 mb-5 shadow-sm">
+                <div class="bg-light rounded-3 mb-4 shadow-sm border">
                     <div class="row">
-                        <div class="col-3 text-center">
-                            <div>
-                                <img src="/static/imgs/profile.jpg" alt="" class="rounded-circle img-fluid">
-                            </div>
+                        <div class="col-3 text-center p-3">
+                            <img src="/static/imgs/profile.jpg" alt="" class="rounded-circle img-fluid w-75">
                             <p class="m-0 py-2">
                                 {{ comment.name }}
                             </p>
@@ -43,7 +43,7 @@
                                 {{ comment.created_at|timesince }} Ago
                             </small>
                         </div>
-                        <div class="col-9 d-grid">
+                        <div class="col-9 d-grid lh-base p-4">
                             {{ comment.body|linebreaks }}
                         </div>
                     </div>

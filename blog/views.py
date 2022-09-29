@@ -1,43 +1,56 @@
 from django.shortcuts import render, get_object_or_404
-from blog.models import Comment, Post
+from blog.models import Category, Post
 from django.views.decorators.http import require_POST
-from django.views.generic import ListView
+# from django.views.generic import ListView
 from django.core.mail import send_mail
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+
+from taggit.models import Tag
 
 from .forms import EmailPostForm, CommentForm
 
-# Create class base views
-class PostListView(ListView):
-    """
-    Alternative post list view
-    """
-    queryset = Post.published.all()
-    context_object_name = 'posts'
-    paginate_by = 3
-    template_name = "blog/list.html"
+# # Create class base views
+# class PostListView(ListView):
+#     """
+#     Alternative post list view
+#     """
+#     queryset = Post.published.all()
+#     context_object_name = 'posts'
+#     paginate_by = 5
+#     template_name = "blog/list.html"
 
 
-# # Create your views here.
-# def post_list(request):
-#     post_list = Post.published.all()
-#     categories = Category.objects.all()
-#     paginator = Paginator(post_list, 3)
-#     page_number = request.GET.get('page', 1)
-# 
-#     try:
-#         posts = paginator.page(page_number)
-#     except PageNotAnInteger:
-#         posts = paginator.page(1)
-#     except EmptyPage:
-#         posts = paginator.page(paginator.num_pages)
-# 
-#     template =  'blog/list.html'
-#     context = {
-#         'posts': posts,
-#         'categories': categories
-#     }
-# 
-#     return render(request, template, context)
+# Create your views here.
+def post_list(request, tag_slug=None):
+    post_list = Post.published.all()
+    categories = Category.objects.all()
+    tag = None
+
+    if tag_slug:
+        tag = get_object_or_404(Tag, slug=tag_slug)
+        post_list = post_list.filter(tags__in=[tag.id])
+
+    paginator = Paginator(post_list, 3)
+    page_number = request.GET.get('page', 1)
+    
+    try:
+        posts = paginator.page(page_number)
+    except PageNotAnInteger:
+        posts = paginator.page(1)
+    except EmptyPage:
+        posts = paginator.page(paginator.num_pages)
+
+    print(posts)
+
+    template =  'blog/list.html'
+    context = {
+        'posts': posts,
+        'categories': categories,
+        'tag': tag
+    }
+
+    return render(request, template, context)
+
 
 def post_detail(request, year, month, day, slug):
     post = get_object_or_404(

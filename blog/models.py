@@ -1,8 +1,8 @@
-import email
 from django.utils.timezone import now
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.urls import reverse
+from taggit.managers import TaggableManager
 
 
 User = get_user_model()
@@ -21,6 +21,13 @@ class Post(models.Model):
     title = models.CharField(max_length=255)
     slug = models.SlugField(max_length=255, unique_for_date='publish')
     body = models.TextField()
+    author = models.ForeignKey(
+        User, 
+        on_delete=models.CASCADE, 
+        related_name='blog_post'
+    )
+    category = models.ForeignKey("Category", on_delete=models.CASCADE)
+    tags = TaggableManager()
     status = models.CharField(
         max_length=2, 
         choices=Status.choices, 
@@ -29,11 +36,6 @@ class Post(models.Model):
     publish = models.DateTimeField(default=now)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    author = models.ForeignKey(
-        User, 
-        on_delete=models.CASCADE, 
-        related_name='blog_post'
-    )
 
     objects = models.Manager()
     published = PublishedManager()

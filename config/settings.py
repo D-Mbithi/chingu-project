@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'webpack_boilerplate',
     "crispy_forms",
     "crispy_bootstrap5",
+    "taggit",
 
     # Custom App
     'accounts.apps.AccountsConfig',
