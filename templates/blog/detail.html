@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% load blog_tags %}
+
 {% load static %}
 
 {% block title %}
@@ -12,17 +14,38 @@
         </div>
         <section class="col-10 offset-1 blog-body px-5 py-5 mb-5 shadow-sm">
             <header class="mb-5">
+                <strong class="d-inline-block mb-2 text-success">World</strong>
                 <h2 class="blog-post-title fw-bold">{{ post.title }}</h2>
                 <!-- <small class="blog-post-meta ">{{ post.publish }} by {{ post.author }}</small> -->
                 <p class="text-muted">Published {{ post.publish }} by <span class="text-capitalize">{{ post.author }}</span></p>
                 <p class="tags">Tags: {{ post.tags.all|join:", " }}</p>
             </header>
-            <main class="text-opacity-75 lh-2">
-                {{ post.body|linebreaks }}
+            <main class="text-opacity-75 lh-2 text-dark">
+                {{ post.body|markdown }}
             </main>
-            <footer>
+            <footer class="my-4">
                 <a href="{% url 'blog:post_share' post.id %}">Share this post</a>
             </footer>
+            <div>
+                <h2 class="mb-4">Similar posts</h2>
+                <div class="d-flex">
+                    {% for post in similar_posts %}
+                        <div class="d-grid shadow-sm gap-2 mx-1 p-2 border bg-light">
+                            <h5 class="mb-2">{{post.title}}</h5>
+                            <small class="text-muted fw-light">
+                                {{ post.body|markdown|truncatewords_html:9 }}
+                            </small>
+                            <small class="">
+                                <a href="{{ post.get_absolute_url }}">Read more</a>
+                            </small>
+                        </div>
+                        {% empty %}
+                        <div class="col-12">
+                            There are no similar posts yet.
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
         </section>
         <section class="col-10 offset-1 blog-body px-5 py-5 shadow-sm">
             {% with comments.count as total_comments %}
@@ -34,16 +57,20 @@
             {% for comment in comments %}
                 <div class="bg-light rounded-3 mb-4 shadow-sm border">
                     <div class="row">
-                        <div class="col-3 text-center p-3">
-                            <img src="/static/imgs/profile.jpg" alt="" class="rounded-circle img-fluid w-75">
-                            <p class="m-0 py-2">
-                                {{ comment.name }}
-                            </p>
-                            <small class="py-3">
-                                {{ comment.created_at|timesince }} Ago
-                            </small>
+                        <div class="col-3 d-grid pt-4">
+                            <img src="/static/imgs/profile.jpg" alt="default profile image" class="rounded-circle img-fluid w-50 mx-auto">
                         </div>
-                        <div class="col-9 d-grid lh-base p-4">
+                        <div class="col-9 d-grid lh-base p-4 comment text-dark">
+                        <p class="m-0 py-2">
+                            <span class="fw-bold">
+                                Author: {{ comment.name }} 
+                            </span>
+                            <span class="text-muted mx-2">
+                                <small>
+                                    {{ comment.created_at|timesince }} Ago
+                                </small>
+                            </span>
+                        </p>
                             {{ comment.body|linebreaks }}
                         </div>
                     </div>

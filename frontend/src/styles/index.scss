@@ -26,6 +26,12 @@ h6 {
   font-family: "Playfair Display", Georgia, "Times New Roman", serif;
 }
 
+p {
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
 /* Blog Post */
 .blog-header-logo {
   font-size: 2.5rem;
@@ -48,4 +54,19 @@ h6 {
   background-color: #fff;
   margin-bottom: 30px;
   padding: 25px 20px;
+}
+
+.comment {
+  p {
+    display: flex;
+    align-items: center;
+  }
+}
+
+// Featured post
+.featured {
+  background-image: url("../../../static/imgs/blog.avif");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
