@@ -26,7 +26,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
-
+SITE_ID = 1
 # Application definition
 
 INSTALLED_APPS = [
@@ -46,6 +46,10 @@ INSTALLED_APPS = [
     # Custom App
     'accounts.apps.AccountsConfig',
     'blog.apps.BlogConfig',
+
+    # Sitemap apps
+    'django.contrib.sites',
+    'django.contrib.sitemaps',
 ]
 
 # Custom user model
